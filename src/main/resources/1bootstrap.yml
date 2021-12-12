@@ -1,0 +1,10 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: wallet-microservice
+  cloud:
+    config:
+      enabled: true
+      uri: http://config-server.southcentralus.azurecontainer.io:9998
