@@ -4,7 +4,6 @@
  */
 package com.banck.walletmovement.spring.kafka;
 
-import com.banck.walletmovement.Exception.KafkaErrHandler;
 import com.banck.walletmovement.domain.Wallet;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,33 +27,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @EnableKafka
 @Configuration
 public class KafkaConfig {
-
-    /*@Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Wallet> walletKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Wallet> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        factory.setErrorHandler(new KafkaErrHandler());
-        return factory;
-    }
-
-    @Bean
-    public ConsumerFactory<String, Wallet> consumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "grupo_wallet");
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(Wallet.class));
-    }
-
     
-    public Map<String, Object> consumerProperties() {
-        return Map.of(
-                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
-                ConsumerConfig.GROUP_ID_CONFIG, "grupo_movimientos_cuentas",
-                ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
-                ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 15000,
-                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
-                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, new JsonDeserializer<>(Wallet.class));
-    }*/
     @Bean
     public ConsumerFactory<String, Wallet> consumerFactory() {
         Map<String, Object> props = new HashMap<>();

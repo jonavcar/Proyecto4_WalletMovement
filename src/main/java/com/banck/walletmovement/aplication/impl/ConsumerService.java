@@ -6,7 +6,7 @@ package com.banck.walletmovement.aplication.impl;
 
 import com.banck.walletmovement.aplication.WalletOperations;
 import com.banck.walletmovement.domain.Wallet;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,15 @@ import org.springframework.stereotype.Service;
  * @author jnacarra
  */
 @Service
+@RequiredArgsConstructor
 public class ConsumerService {
+    
+    private final WalletOperations operations;
 
-//    @Autowired
-//    public WalletOperations operations;
-//
-//    @KafkaListener(
-//            topics = "topic-wallet", containerFactory = "walletKafkaListenerContainerFactory")
-//    public void consumerWalletCreate(Wallet Wallet) {
-//        System.out.println("El telefonito:" + Wallet.getTelephone());
-//        //operations.create(person);
-//    }
+    @KafkaListener(topics = "topic-wallet", containerFactory = "walletKafkaListenerContainerFactory")
+    public void createWallet(Wallet w) {
+        //insertamos en la bd de mongo un wallet
+        operations.create(w);
+    }
 
 }

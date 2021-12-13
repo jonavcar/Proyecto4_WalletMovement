@@ -15,11 +15,11 @@ public interface WalletOperations {
 
     public Flux<Wallet> listByDocument(String document);
 
-    public Mono<Wallet> get(String person);
+    public Mono<Wallet> get(String id);
 
-    public Mono<ResponseService> create(Wallet person); 
+    public Mono<ResponseService> create(Wallet wallet); 
 
-    public Mono<Wallet> update(String id, Wallet person);
+    public Mono<Wallet> update(String id, Wallet wallet);
 
     public void delete(String id);
 

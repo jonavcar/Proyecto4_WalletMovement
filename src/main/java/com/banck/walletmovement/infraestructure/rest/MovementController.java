@@ -12,15 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Random;
 import com.banck.walletmovement.aplication.MovementOperations;
-import com.banck.walletmovement.utils.Concept;
-import com.banck.walletmovement.utils.Modality;
-import com.banck.walletmovement.utils.ProductType;
-import java.time.LocalDate;
+import com.banck.walletmovement.utils.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -32,10 +25,6 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/wallet/mov")
 @RequiredArgsConstructor
 public class MovementController {
-
-    DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-    LocalDateTime dateTime = LocalDateTime.now(ZoneId.of("America/Bogota"));
     private final MovementOperations operations;
 
     @GetMapping
@@ -60,17 +49,11 @@ public class MovementController {
 
     @PostMapping
     public Mono<ResponseEntity> create(@RequestBody Movement rqMovement) {
-        rqMovement.setMovement(getRandomNumberString());
-
-        rqMovement.setModality(Modality.BANCA_MOVIL.value);
-        rqMovement.setConcept(Concept.ENVIO_MOVIL.value);
-        rqMovement.setProductType(ProductType.MONEDERO_MOVIL.value);
-
-        rqMovement.setDate(dateTime.format(formatDate));
-        rqMovement.setHour(dateTime.format(formatTime));
-        rqMovement.setState(true);
         return operations.create(rqMovement).flatMap(w -> {
-            return Mono.just(new ResponseEntity(w, HttpStatus.OK));
+            if (w.getStatus() == Status.OK) {
+                return Mono.just(new ResponseEntity(w, HttpStatus.OK));
+            }
+            return Mono.just(new ResponseEntity(w.getMessage(), HttpStatus.BAD_REQUEST));
         });
     }
 
@@ -83,18 +66,4 @@ public class MovementController {
     public void delete(@PathVariable("id") String id) {
         operations.delete(id);
     }
-
-    public static String getRandomNumberString() {
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999999);
-        return String.format("%09d", number);
-    }
-
-    public boolean isDateRange(String strDateI, String strDateF, String strDateC) {
-        LocalDate dateI = LocalDate.parse(strDateI, formatDate);
-        LocalDate dateF = LocalDate.parse(strDateF, formatDate);
-        LocalDate dateC = LocalDate.parse(strDateC, formatDate);
-        return ((dateC.isAfter(dateI) || dateC.isEqual(dateI)) && (dateC.isBefore(dateF) || dateC.isEqual(dateF)));
-    }
-
 }
