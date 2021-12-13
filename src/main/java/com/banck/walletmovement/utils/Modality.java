@@ -10,45 +10,25 @@ package com.banck.walletmovement.utils;
  */
 public enum Modality {
     // VENTANILLA
-    VENTANILLA("VENTANILLA") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    },
+    VENTANILLA("VENTANILLA"),
     // POS
-    POS("POS") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    },
+    POS("POS"),
     // CAJERO-AUTOMATICO
-    CAJERO("CAJERO") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    },
+    CAJERO("CAJERO"),
     // EFECTIVO-MOVIL
-    EFECTIVO_MOVIL("EFECTIVO-MOVIL") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    },
+    EFECTIVO_MOVIL("EFECTIVO-MOVIL"),
     //BANCA-MOVIL
-    BANCA_MOVIL("BANCA-MOVIL") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    };
+    BANCA_MOVIL("BANCA-MOVIL");
 
     public final String value;
 
-    public boolean equals(String customerType) {
-        return value.equals(customerType);
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public boolean equalsName(String otherValue) {
+        return value.equals(otherValue);
     }
 
     private Modality(String value) {

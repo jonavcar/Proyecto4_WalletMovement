@@ -9,23 +9,18 @@ package com.banck.walletmovement.utils;
  * @author jonavcar
  */
 public enum MovementType {
-    CARGO("CARGO") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    },
-    ABONO("ABONO") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    };
+    CARGO("CARGO"),
+    ABONO("ABONO");
 
     public final String value;
 
-    public boolean equals(String movementType) {
-        return value.equals(movementType);
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public boolean equalsName(String otherValue) {
+        return value.equals(otherValue);
     }
 
     private MovementType(String value) {

@@ -9,17 +9,17 @@ package com.banck.walletmovement.utils;
  * @author jonavcar
  */
 public enum ProductType {
-    MONEDERO_MOVIL("MONEDERO") {
-        @Override
-        public boolean equals(String customerType) {
-            return value.equals(customerType);
-        }
-    };
+    MONEDERO_MOVIL("MONEDERO");
 
     public final String value;
 
-    public boolean equals(String customerType) {
-        return value.equals(customerType);
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public boolean equalsName(String otherValue) {
+        return value.equals(otherValue);
     }
 
     private ProductType(String value) {

@@ -9,41 +9,21 @@ package com.banck.walletmovement.utils;
  * @author jonavcar
  */
 public enum Concept {
-    RETIRO("RETIRO") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    },
-    DEPOSITO("DEPOSITO") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    },
-    TRANSFERENCIA("TRANSFERENCIA") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    },
-    AUTOMATICO("AUTOMATICO") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    },
-    ENVIO_MOVIL("ENVIO-MOVIL") {
-        @Override
-        public boolean equals(String movementType) {
-            return value.equals(movementType);
-        }
-    };
+    RETIRO("RETIRO"),
+    DEPOSITO("DEPOSITO"),
+    TRANSFERENCIA("TRANSFERENCIA"),
+    AUTOMATICO("AUTOMATICO"),
+    ENVIO_MOVIL("ENVIO-MOVIL");
 
     public final String value;
 
-    public boolean equals(String movementType) {
-        return value.equals(movementType);
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public boolean equalsName(String otherValue) {
+        return value.equals(otherValue);
     }
 
     private Concept(String value) {
