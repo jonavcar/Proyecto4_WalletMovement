@@ -9,24 +9,34 @@ package com.banck.walletmovement.utils;
  * @author jonavcar
  */
 public enum Concept {
-    RETIRO("RETIRO"),
-    DEPOSITO("DEPOSITO"),
-    TRANSFERENCIA("TRANSFERENCIA"),
-    AUTOMATICO("AUTOMATICO"),
-    ENVIO_MOVIL("ENVIO-MOVIL");
+
+    PONER_DINERO("PONER-DINERO", "Poner dinero", MovementType.ABONO),
+    MANDAR_DINERO("MANDAR-DINERO", "Mandar dinero", MovementType.CARGO),
+    SACAR_DINERO("SACAR-DINERO", "Sacar dinero", MovementType.CARGO),
+    PAGAR_SERVICIO("PAGAR-SERVICIO", "Pagar servicios", MovementType.CARGO),
+    RECARGAR_CELULAR("RECARGAR-CELULAR", "Recargar celular", MovementType.CARGO),
+    PAGAR_COMPRA("PAGAR-COMPRA", "Pagar compras en comercios", MovementType.CARGO);
 
     public final String value;
+    public final String codigo;
+    public final MovementType movementType;
 
     @Override
     public String toString() {
-        return value;
+        return this.codigo;
     }
 
-    public boolean equalsName(String otherValue) {
-        return value.equals(otherValue);
+    public boolean equalsCodigo(String codigo) {
+        return this.codigo.equals(codigo);
+    }
+    
+    public MovementType getMovementType() {
+        return this.movementType;
     }
 
-    private Concept(String value) {
+    private Concept(String codigo, String value, MovementType movementType) {
+        this.codigo = codigo;
         this.value = value;
+        this.movementType = movementType;
     }
 }

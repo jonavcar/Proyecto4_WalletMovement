@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/wallet/mov")
 @RequiredArgsConstructor
 public class MovementController {
+
     private final MovementOperations operations;
 
     @GetMapping
@@ -51,7 +52,7 @@ public class MovementController {
     public Mono<ResponseEntity> create(@RequestBody Movement rqMovement) {
         return operations.create(rqMovement).flatMap(w -> {
             if (w.getStatus() == Status.OK) {
-                return Mono.just(new ResponseEntity(w, HttpStatus.OK));
+                return Mono.just(new ResponseEntity(w.getData(), HttpStatus.OK));
             }
             return Mono.just(new ResponseEntity(w.getMessage(), HttpStatus.BAD_REQUEST));
         });

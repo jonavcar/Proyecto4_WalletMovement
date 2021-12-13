@@ -24,6 +24,8 @@ public interface MovementOperations {
     public Mono<ResponseService> create(Movement movement);
 
     public Mono<Movement> update(String id, Movement movement);
+    
+    public Mono<Double> saldo(String wallet);
 
     public Mono<Double> mainAccountBalance(String debitCard);
 
