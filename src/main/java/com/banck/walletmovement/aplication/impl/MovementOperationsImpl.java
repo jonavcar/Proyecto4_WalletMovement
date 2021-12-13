@@ -105,10 +105,11 @@ public class MovementOperationsImpl implements MovementOperations {
         movement.setMovement(getRandomNumberString());
         movement.setCustomer(movement.getProduct());
 
-        Optional<Concept> concept = Arrays.stream(Concept.values())
+        Optional<Concept> con = Arrays.stream(Concept.values())
                 .filter(w -> w.toString().toUpperCase().equals(movement.getConcept().toUpperCase()))
                 .findFirst();
-        if (concept.get().movementType == MovementType.ABONO) {
+        Concept concept = con.isPresent() ? con.get() : Concept.SACAR_DINERO;
+        if (concept.movementType == MovementType.ABONO) {
             movement.setMovementType(MovementType.ABONO.toString());
             movement.setModality(Modality.VENTANILLA.toString());
             movement.setConcept(Concept.PONER_DINERO.toString());
@@ -125,10 +126,10 @@ public class MovementOperationsImpl implements MovementOperations {
             }
             movement.setMovementType(MovementType.CARGO.toString());
             movement.setModality(Modality.VENTANILLA.toString());
-            movement.setConcept(concept.get().toString());
+            movement.setConcept(concept.toString());
             movement.setProductType(ProductType.MONEDERO_MOVIL.toString());
 
-            movement.setObservation(concept.get().value + ", por la suma de " + movement.getAmount() + " Soles.");
+            movement.setObservation(concept.value + ", por la suma de " + movement.getAmount() + " Soles.");
         }
 
         movement.setThirdClient("");
@@ -138,7 +139,7 @@ public class MovementOperationsImpl implements MovementOperations {
         movement.setHour(dateTime.format(formatTime));
         movement.setState(true);
 
-        if (concept.get().movementType == MovementType.ABONO) {
+        if (concept.movementType == MovementType.ABONO) {
             return movementRepository.create(movement).flatMap(w -> {
                 responseService.setStatus(Status.OK);
                 responseService.setData(w);
