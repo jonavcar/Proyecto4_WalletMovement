@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    config:
+      enabled: true
+      uri: http://config-server.southcentralus.azurecontainer.io:9998
