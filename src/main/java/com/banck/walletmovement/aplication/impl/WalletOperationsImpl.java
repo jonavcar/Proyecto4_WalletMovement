@@ -91,35 +91,34 @@ public class WalletOperationsImpl implements WalletOperations {
     public Mono<ResponseService> validateDataWalletToCreate(Wallet wallet) {
         responseService = new ResponseService();
         responseService.setStatus(Status.ERROR);
-        return Mono.just(wallet).flatMap(fm -> {
-            if (!Optional.ofNullable(wallet.getDocument()).isPresent() || wallet.getDocument().length() < 8) {
-                responseService.setMessage("Debe ingresar el documento y debe ser mayor a 8 caracteres");
-                return Mono.just(responseService);
-            }
-            if (!Optional.ofNullable(wallet.getDocumentType()).isPresent()) {
-                responseService.setMessage("Debe ingresar el Tipo Documento");
-                return Mono.just(responseService);
-            }
-            if (!Optional.ofNullable(wallet.getTelephone()).isPresent() || wallet.getTelephone().length() < 9) {
-                responseService.setMessage("Debe ingresar numero de telefono y debe ser mayor igual a 9 numeros");
-                return Mono.just(responseService);
-            }
-            if (!Optional.ofNullable(wallet.getImei()).isPresent() || wallet.getImei().length() < 30) {
-                responseService.setMessage("Debe ingresar el imei del telefono y debe ser mayor a 30 caracteres");
-                return Mono.just(responseService);
-            }
-            if (!Optional.ofNullable(wallet.getMail()).isPresent()) {
-                responseService.setMessage("Debe ingresar un correo");
-                return Mono.just(responseService);
-            }
 
-            if (!EmailValidation.patternMatches(wallet.getMail())) {
-                responseService.setMessage("El correo ingresado no es correcto!!");
-                return Mono.just(responseService);
-            }
-            responseService.setStatus(Status.OK);
-            responseService.setData(fm);
+        if (!Optional.ofNullable(wallet.getDocument()).isPresent() || wallet.getDocument().length() < 8) {
+            responseService.setMessage("Debe ingresar el documento y debe ser mayor a 8 caracteres");
             return Mono.just(responseService);
-        });
+        }
+        if (!Optional.ofNullable(wallet.getDocumentType()).isPresent()) {
+            responseService.setMessage("Debe ingresar el Tipo Documento");
+            return Mono.just(responseService);
+        }
+        if (!Optional.ofNullable(wallet.getTelephone()).isPresent() || wallet.getTelephone().length() < 9) {
+            responseService.setMessage("Debe ingresar numero de telefono y debe ser mayor igual a 9 numeros");
+            return Mono.just(responseService);
+        }
+        if (!Optional.ofNullable(wallet.getImei()).isPresent() || wallet.getImei().length() < 30) {
+            responseService.setMessage("Debe ingresar el imei del telefono y debe ser mayor a 30 caracteres");
+            return Mono.just(responseService);
+        }
+        if (!Optional.ofNullable(wallet.getMail()).isPresent()) {
+            responseService.setMessage("Debe ingresar un correo");
+            return Mono.just(responseService);
+        }
+
+        if (!EmailValidation.patternMatches(wallet.getMail())) {
+            responseService.setMessage("El correo ingresado no es correcto!!");
+            return Mono.just(responseService);
+        }
+        responseService.setStatus(Status.OK);
+        responseService.setData(wallet);
+        return Mono.just(responseService);
     }
 }

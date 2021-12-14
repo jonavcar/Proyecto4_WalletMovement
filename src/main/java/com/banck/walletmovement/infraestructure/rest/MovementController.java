@@ -22,7 +22,7 @@ import org.springframework.http.ResponseEntity;
  * @author jonavcar
  */
 @RestController
-@RequestMapping("/wallet/mov")
+@RequestMapping("/mov-wallet")
 @RequiredArgsConstructor
 public class MovementController {
 

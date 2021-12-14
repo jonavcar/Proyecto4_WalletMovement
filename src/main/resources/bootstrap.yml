@@ -1,0 +1,23 @@
+server:
+  port: 8087
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: walletmovement-microservice
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:9998
+---
+spring:
+  profiles: qas
+  cloud:
+    config:
+      enabled: true
+      uri: http://config-server.southcentralus.azurecontainer.io:9998

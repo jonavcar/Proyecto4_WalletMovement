@@ -9,6 +9,7 @@ import com.banck.walletmovement.domain.Wallet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -17,13 +18,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ConsumerService {
-    
+
     private final WalletOperations operations;
 
     @KafkaListener(topics = "topic-wallet", containerFactory = "walletKafkaListenerContainerFactory")
-    public void createWallet(Wallet w) {
-        //insertamos en la bd de mongo un wallet
-        operations.create(w);
+    public void createWallet(Wallet wallet) {
+        Mono<ResponseService> rs = operations.create(wallet);
+        rs.subscribe(w -> {
+            System.out.println(w.getMessage());
+        });
+
     }
 
 }
