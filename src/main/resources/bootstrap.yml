@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: qas
   application:
     name: walletmovement-microservice
 
